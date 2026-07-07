@@ -1,0 +1,29 @@
+target: fermat_quartic
+seed: 20260707
+n_samples: 300
+include_orbits: true
+splits:
+  train: 0.7
+  val: 0.15
+invariants:
+  power_max: 8
+models:
+  log_sum_terms: 6
+validation:
+  geometry_max_points: 72
+  finite_difference_step: 1.0e-4
+training:
+  milestone3:
+    output_dir: data/experiments/fermat_quartic_milestone3
+    best_model_path: artifacts/models/fermat_quartic_milestone3_best.json
+    max_train_points: 54
+    max_val_points: 72
+    maxiter: 80
+    positivity_weight: 25.0
+    l2_weights: [0.001, 0.0001]
+    seeds: [20260707, 20260708]
+    basis_sets:
+      compact: [p2, p3, p4, e2, e3, centered_l2]
+      rich: [p2, p3, p4, p5, p6, e2, e3, e4, centered_l2, centered_l3, centered_l4, entropy]
+outputs:
+  experiment_dir: data/experiments/fermat_quartic_milestone3

@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Environments
+.venv/
+venv/
+env/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# OS/editor
+.DS_Store
+.idea/
+.vscode/
+
+# Generated experiment artifacts
+data/raw/*
+data/processed/*
+data/experiments/*
+reports/figures/*
+
+# Keep directory placeholders
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/experiments/.gitkeep
+!reports/figures/.gitkeep
+!reports/figures/milestone3_*.png
+!reports/figures/milestone4_*.png
+
+# Large trained models/checkpoints should be promoted deliberately.
+artifacts/models/*
+artifacts/checkpoints/*
+artifacts/external/*
+!artifacts/models/.gitkeep
+!artifacts/models/*.json
+!artifacts/checkpoints/.gitkeep
+!artifacts/external/.gitkeep

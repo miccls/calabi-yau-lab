@@ -1,0 +1,53 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\title{Structured Invariant Expansions for Fermat Calabi--Yau Potentials}
+\author{CY Expansion Lab}
+\date{}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This placeholder \LaTeX{} report accompanies the generated Markdown report in \texttt{reports/paper.md}. The first runnable experiment samples Fermat-type Calabi--Yau hypersurfaces, builds quotient-invariant coordinates, fits structured invariant models, and validates them with proxy diagnostics.
+\end{abstract}
+
+\section{Setup}
+The core ansatz is
+\[
+\omega_\phi = \omega_{\mathrm{ref}} + i\partial\bar\partial\phi,
+\qquad \omega_\phi^n = C\Omega\wedge\bar\Omega.
+\]
+The current codebase keeps the Kähler-potential formulation central but uses a synthetic invariant target until trusted Ricci-flat reference data and automatic-differentiation Hessian checks are added.
+
+\section{Implemented Loop}
+Run
+\[
+\texttt{uv run python experiments/run\_all.py --config configs/fermat\_quartic.yaml}
+\]
+to generate samples, compute invariants, fit models, validate proxies, and regenerate \texttt{reports/paper.md}.
+
+\section{Milestone 1 Geometry Diagnostics}
+The codebase now includes affine local patches for the Fermat quartic K3, branch-stable reconstruction of the hypersurface constraint, finite-difference complex Hessians for local Kähler potential callables, metric eigenvalue checks, residue-form holomorphic volume density, and centered local Monge--Ampère residuals. These diagnostics are wired into the quartic validation run. Ricci tensor residuals and autodiff-backed training derivatives remain future work.
+
+\section{Milestone 2 Numerical Potential}
+The first saved K3 numerical potential has the form
+\[
+K = K_{\mathrm{FS}} + \sum_a \theta_a B_a(r),
+\]
+where the basis terms are projective, Fermat-phase, and permutation invariant functions of normalized radii. The checkpoint is stored at \texttt{artifacts/models/fermat\_quartic\_invariant\_potential.json}. In the smoke run it beats the Fubini--Study Monge--Ampère residual while preserving local metric positivity on the sampled patches. This is a small finite-difference-trained model, not yet a SOTA model.
+
+\section{Milestone 3 Tuning}
+Milestone 3 adds a reproducible sweep over richer invariant bases, seeds, and regularization strengths. The selected checkpoint is \texttt{artifacts/models/fermat\_quartic\_milestone3\_best.json}. Selection uses held-out centered log-Monge--Ampère RMSE, with positivity violation rate as the first ordering key. The verified test comparison is Fubini--Study RMSE $0.40049$, Milestone 2 RMSE $0.03337$, and Milestone 3 best RMSE $0.01307$, all in dimensionless centered log-residual units on held-out local patches. These units are not directly comparable to sigma-loss, raw volume-ratio loss, Ricci losses, MSE, or MAE from other papers.
+
+\section{Milestone 4 Autodiff Benchmark}
+Milestone 4 adds a JAX automatic-differentiation geometry path for local Fermat hypersurface patches. The benchmark path computes complex Hessians, log determinants, centered log-Monge--Ampère residuals, sample-normalized volume-ratio errors, sigma-style $L^1$ volume-ratio errors, metric positivity diagnostics, and opt-in Ricci scalar diagnostics. Metric definitions are written to \texttt{reports/tables/milestone4\_metric\_definitions.csv}.
+
+The benchmark command is
+\[
+\texttt{uv run --extra dev python experiments/run\_milestone4.py --max-points 36 --sample-count 120 --ricci-points 1}.
+\]
+The resulting centered log-Monge--Ampère RMSE values are: Fermat quartic K3 Fubini--Study $0.346285$, Milestone 2 invariant checkpoint $0.0377692$, Milestone 3 best checkpoint $0.0153594$, and Fermat quintic Fubini--Study $0.70171$. The corresponding sigma-style $L^1$ volume-ratio proxy values are $0.314426$, $0.0322206$, $0.0134178$, and $0.525657$. All four evaluated models have positivity violation rate $0$ on the sampled local patches.
+
+Milestone 4 also adds a literature-theory registry, including Mirjanic--Mishra Proposition 3.3 and Section 6 analytical properties of $\phi$, with source, status, implementation status, and intended project use. These entries are tracked in \texttt{reports/tables/milestone4\_theory\_registry.csv}. The sigma-style values reported here are sample-average proxies with a fitted per-model volume scale, not direct claims of identical normalization to published tables.
+
+\end{document}

@@ -1,0 +1,16 @@
+target: fermat_quintic
+seed: 20260707
+n_samples: 240
+include_orbits: true
+splits:
+  train: 0.7
+  val: 0.15
+invariants:
+  power_max: 7
+models:
+  log_sum_terms: 6
+validation:
+  geometry_max_points: 48
+  finite_difference_step: 1.0e-4
+outputs:
+  experiment_dir: data/experiments/fermat_quintic_smoke
