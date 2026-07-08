@@ -22,7 +22,7 @@
 
 - Finite-difference metric positivity and Monge-Ampere residuals remain available for validation, but Milestone 4 adds JAX autodiff benchmark diagnostics.
 - Ricci scalar diagnostics are implemented as an opt-in nested-autodiff benchmark path and remain too expensive for large sweeps without further optimization.
-- SOTA-scale model training still needs to move from finite-difference Hessians to autodiff-compatible training objectives.
+- Milestone 5 adds autodiff-compatible training objectives; the remaining SOTA gap is richer neural/graph/spectral architectures and larger sampling.
 - The current fitted scalar invariant models can fit the synthetic target while failing Kahler positivity on many local patches; future fitting must include geometric losses or positivity-aware parameterizations.
 - The current positive log-sum model fixes exponents, so it tests coefficient fitting more than basis discovery.
 - An initial fixed-type sampler perturbation moved points off the Fermat hypersurface; the sampler now reprojects by solving for the last coordinate after the perturbation.
@@ -33,7 +33,7 @@
 
 ## Next Steps
 
-- Milestone 5: train autodiff-compatible geometry-aware models on K3 and Fermat quintic using the Milestone 4 metric suite.
+- Milestone 6: probe the Milestone 5 K3 and quintic checkpoints and decide whether to feed findings back into a second Milestone 5 training loop.
 
 ## Milestone 3 Run
 
@@ -63,3 +63,13 @@ The literature-theory registry currently contains 7 entries, including Mirjanic-
 | fermat_quintic_threefold | fermat_quintic_threefold_fubini_study | 0.70171 | 0.525657 | 0 | 36 |
 
 Limitations: current sigma values are sample-average proxies, not proof of identical integration measure to any published table. Ricci scalar diagnostics are implemented as an opt-in autodiff path because nested Hessians are substantially more expensive than log-determinant metrics.
+
+## Milestone 5 Run
+
+- Command: `uv run --extra dev python experiments/run_milestone5.py --sample-count 96 --train-points 18 --val-points 14 --test-points 18 --maxiter 30 --basis-sets compact,rich,sqrt_s2_baseline --losses log_ma,hybrid_sigma --seeds 20260707,20260708`.
+- Ran autodiff-linear invariant correction sweeps for Fermat quartic K3 and Fermat quintic.
+- Selected best models by validation positivity violation rate, centered log-Monge-Ampere RMSE, and sigma-style volume-ratio error.
+- Best fermat_quartic_k3: `k3_rich_log_ma_seed20260707` at `artifacts/models/fermat_quartic_milestone5_best.json`; test centered log-MA RMSE `0.014954184943359919`, test sigma-style L1 `0.011327841913471784`.
+- Best fermat_quintic_threefold: `quintic_rich_log_ma_seed20260708` at `artifacts/models/fermat_quintic_milestone5_best.json`; test centered log-MA RMSE `0.06366106870454061`, test sigma-style L1 `0.049840509667919274`.
+- Generated Milestone 5 figures under `reports/figures/milestone5_*.png` and tables under `reports/tables/milestone5_*.csv`.
+- Published comparisons remain convention-aware; no external numeric table values were copied into repo comparisons.

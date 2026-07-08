@@ -50,4 +50,17 @@ The resulting centered log-Monge--Ampère RMSE values are: Fermat quartic K3 Fub
 
 Milestone 4 also adds a literature-theory registry, including Mirjanic--Mishra Proposition 3.3 and Section 6 analytical properties of $\phi$, with source, status, implementation status, and intended project use. These entries are tracked in \texttt{reports/tables/milestone4\_theory\_registry.csv}. The sigma-style values reported here are sample-average proxies with a fitted per-model volume scale, not direct claims of identical normalization to published tables.
 
+\section{Milestone 5 Autodiff Training}
+Milestone 5 introduces autodiff-trained invariant Kähler-potential corrections for both the Fermat quartic K3 and Fermat quintic. Local Hessian tensors for invariant basis terms are computed with JAX and the coefficient optimization uses geometric losses derived from the Milestone 4 metric suite.
+
+\begin{center}
+\begin{tabular}{llll}
+target & candidate & centered log-MA RMSE & sigma-style $L^1$ \\
+fermat_quartic_k3 & k3_rich_log_ma_seed20260707 & 0.0149542 & 0.0113278 \\
+fermat_quintic_threefold & quintic_rich_log_ma_seed20260708 & 0.0636611 & 0.0498405 \\
+\end{tabular}
+\end{center}
+
+The reported sigma-style values are sample-normalized volume-ratio proxies. They are not direct claims of matching any published table unless the sampling measure and normalization are later aligned.
+
 \end{document}

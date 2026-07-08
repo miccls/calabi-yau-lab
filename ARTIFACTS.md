@@ -78,3 +78,28 @@ reports/figures/milestone4_*.png
 reports/milestone4_section.md
 reports/milestone4_log.md
 ```
+
+## Current Milestone 5 Training Run
+
+The first autodiff SOTA-oriented training sweep is reproducible with:
+
+```bash
+uv run --extra dev python experiments/run_milestone5.py --sample-count 96 --train-points 18 --val-points 14 --test-points 18 --maxiter 30 --basis-sets compact,rich,sqrt_s2_baseline --losses log_ma,hybrid_sigma --seeds 20260707,20260708
+```
+
+Generated sample-level and pointwise outputs land in:
+
+```text
+data/experiments/milestone5_sota/
+```
+
+Promoted checkpoints and small outputs are tracked in:
+
+```text
+artifacts/models/fermat_quartic_milestone5_best.json
+artifacts/models/fermat_quintic_milestone5_best.json
+reports/tables/milestone5_*.csv
+reports/figures/milestone5_*.png
+reports/milestone5_section.md
+reports/milestone5_log.md
+```

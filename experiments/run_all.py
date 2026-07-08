@@ -138,7 +138,7 @@ The invariant quotient variables are sufficient for the synthetic target by cons
 
 ## Conclusions
 
-Milestone 2 produces a reproducible saved K3 numerical potential checkpoint. It is still small and finite-difference trained, but it is the first model in the repo optimized directly against the true local geometry diagnostics. The next major need is SOTA-scale autodiff training on K3 and the Fermat quintic using the Milestone 4 metric suite.
+Milestone 2 produces a reproducible saved K3 numerical potential checkpoint. It is still small and finite-difference trained, but it is the first model in the repo optimized directly against the true local geometry diagnostics. Milestone 5 now adds the first autodiff-trained K3 and quintic invariant correction checkpoints; the next major need is probing their failure modes and feeding that evidence into a richer second training pass.
 
 ## Limitations
 
@@ -146,14 +146,14 @@ This is not yet SOTA. The trained model is a low-dimensional invariant correctio
 
 ## Next Research Directions
 
-1. Milestone 5: train autodiff-compatible geometry-aware models on K3 and Fermat quintic.
-2. Run larger multi-seed and loss-ablation sweeps using the Milestone 4 metric suite.
-3. Probe trained models on special loci and invariant coordinates.
-4. Feed probing results back into training when they reveal better constraints, sampling, or architecture choices.
+1. Milestone 6: probe the Milestone 5 K3 and quintic models on special loci and invariant coordinates.
+2. Test Mirjanic-Mishra Proposition 3.3 and Section 6 claims against the trained checkpoints.
+3. Identify residual/failure regions that should change sampling, constraints, or architecture.
+4. Feed probing results back into a second Milestone 5 training pass when justified.
 5. Use supported locus formulas and derivative bounds as symbolic-discovery constraints.
 """
     (report_dir / "paper.md").write_text(paper, encoding="utf-8")
-    for section_name in ["milestone3_section.md", "milestone4_section.md"]:
+    for section_name in ["milestone3_section.md", "milestone4_section.md", "milestone5_section.md"]:
         section = report_dir / section_name
         if section.exists():
             with (report_dir / "paper.md").open("a", encoding="utf-8") as handle:
@@ -183,7 +183,7 @@ This is not yet SOTA. The trained model is a low-dimensional invariant correctio
 
 - Finite-difference metric positivity and Monge-Ampere residuals remain available for validation, but Milestone 4 adds JAX autodiff benchmark diagnostics.
 - Ricci scalar diagnostics are implemented as an opt-in nested-autodiff benchmark path and remain too expensive for large sweeps without further optimization.
-- SOTA-scale model training still needs to move from finite-difference Hessians to autodiff-compatible training objectives.
+- Milestone 5 adds autodiff-compatible training objectives; the remaining SOTA gap is richer neural/graph/spectral architectures and larger sampling.
 - The current fitted scalar invariant models can fit the synthetic target while failing Kahler positivity on many local patches; future fitting must include geometric losses or positivity-aware parameterizations.
 - The current positive log-sum model fixes exponents, so it tests coefficient fitting more than basis discovery.
 - An initial fixed-type sampler perturbation moved points off the Fermat hypersurface; the sampler now reprojects by solving for the last coordinate after the perturbation.
@@ -194,10 +194,10 @@ This is not yet SOTA. The trained model is a low-dimensional invariant correctio
 
 ## Next Steps
 
-- Milestone 5: train autodiff-compatible geometry-aware models on K3 and Fermat quintic using the Milestone 4 metric suite.
+- Milestone 6: probe the Milestone 5 K3 and quintic checkpoints and decide whether to feed findings back into a second Milestone 5 training loop.
 """
     (report_dir / "research_log.md").write_text(log, encoding="utf-8")
-    for log_name in ["milestone3_log.md", "milestone4_log.md"]:
+    for log_name in ["milestone3_log.md", "milestone4_log.md", "milestone5_log.md"]:
         log_path = report_dir / log_name
         if log_path.exists():
             with (report_dir / "research_log.md").open("a", encoding="utf-8") as handle:

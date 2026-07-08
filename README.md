@@ -53,6 +53,29 @@ This runs the JAX autodiff evaluation path for:
 
 Tracked summaries are written to `reports/tables/`, `reports/milestone4_section.md`, and `reports/milestone4_log.md`. Generated sample-level outputs are written to `data/experiments/milestone4_benchmark/`.
 
+## Milestone 5 Autodiff Training
+
+```bash
+cd /Users/ms/calabi-yau-lab
+uv run --extra dev python experiments/run_milestone5.py --sample-count 96 --train-points 18 --val-points 14 --test-points 18 --maxiter 30 --basis-sets compact,rich,sqrt_s2_baseline --losses log_ma,hybrid_sigma --seeds 20260707,20260708
+```
+
+This runs the first SOTA-oriented autodiff training sweep for:
+
+- Fermat quartic K3 invariant Kähler-potential corrections.
+- Fermat quintic invariant Kähler-potential corrections.
+- Compact, rich, and `sqrt(s2)`-style theory-derived invariant bases.
+- Centered log-Monge-Ampere and hybrid sigma/volume-ratio losses.
+
+Tracked outputs are written to:
+
+- `artifacts/models/fermat_quartic_milestone5_best.json`
+- `artifacts/models/fermat_quintic_milestone5_best.json`
+- `reports/tables/milestone5_*.csv`
+- `reports/figures/milestone5_*.png`
+- `reports/milestone5_section.md`
+- `reports/milestone5_log.md`
+
 ## Research Protocol
 
 - `MILESTONES.md` defines the sequential research plan.
@@ -81,14 +104,18 @@ Tracked summaries are written to `reports/tables/`, `reports/milestone4_section.
 - Symmetry-aware numerical potential model `K = K_FS + sum_a theta_a B_a(r)`.
 - Saved K3 checkpoint at `artifacts/models/fermat_quartic_invariant_potential.json`.
 - Milestone 3 tuned checkpoint at `artifacts/models/fermat_quartic_milestone3_best.json`.
+- Milestone 5 autodiff-trained K3 checkpoint at `artifacts/models/fermat_quartic_milestone5_best.json`.
+- Milestone 5 autodiff-trained quintic checkpoint at `artifacts/models/fermat_quintic_milestone5_best.json`.
 - Fermat quintic Fubini-Study autodiff benchmark baseline.
+- Autodiff-linear invariant correction training for both K3 and quintic.
+- Basis/loss/seed sweeps with held-out metric selection.
 - Literature-theory registry for imported propositions/conjectures, including Mirjanic-Mishra Proposition 3.3 and Section 6 analytical properties of `phi`.
 - Metric-definition and comparison tables with explicit units/conventions.
-- Figures for training curves, residual distributions, stratum-wise residuals, positivity, correction structure, and baseline comparisons.
+- Figures for training curves, residual distributions, stratum-wise residuals, positivity, correction structure, ablations, volume-ratio metrics, and baseline comparisons.
 
 ## Current Approximation Boundary
 
-This project does not yet claim a closed-form Ricci-flat metric. The saved K3 models are finite-difference-trained symmetry-aware corrections to Fubini-Study. Milestone 4 adds benchmark-grade autodiff evaluation and metric definitions, but SOTA-scale autodiff training is still future work. Sigma-style values are sample-average proxies unless a future experiment matches the sampling measure and normalization of a specific published table.
+This project does not yet claim a closed-form Ricci-flat metric. Milestone 5 adds the first autodiff-trained K3 and quintic invariant correction models, but the model family is still a linear invariant correction, not a full neural, graph, or high-dimensional spectral SOTA architecture. Sigma-style values are sample-average proxies unless a future experiment matches the sampling measure and normalization of a specific published table.
 
 ## Project Layout
 
@@ -106,8 +133,8 @@ tests/                   smoke and unit tests
 
 The working hypothesis is that Ricci-flat Kahler potentials may become sparse or structured after quotienting by projective scaling, Fermat phase symmetries, and coordinate permutations. The next serious milestones are:
 
-1. Train autodiff-compatible geometry-aware models on K3 and the Fermat quintic.
-2. Run larger multi-seed and loss-ablation sweeps using the Milestone 4 metric suite.
-3. Probe trained models on special loci and invariant coordinates.
-4. Feed Milestone 6 probing results back into Milestone 5 training when they reveal better constraints, sampling, or architecture choices.
+1. Probe the Milestone 5 K3 and quintic models on special loci and invariant coordinates.
+2. Test Mirjanic-Mishra Proposition 3.3 and Section 6 claims against the trained models.
+3. Identify residual/failure regions that should change sampling, constraints, or architecture.
+4. Feed Milestone 6 probing results back into a second Milestone 5 training pass when justified.
 5. Use supported locus formulas and derivative bounds as symbolic-discovery constraints.

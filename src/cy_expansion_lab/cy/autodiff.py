@@ -60,6 +60,12 @@ def invariant_basis_jax(z: "jnp.ndarray", basis_names: tuple[str, ...]) -> "jnp.
             values.append(jnp.sum(centered**3, axis=1))
         elif name == "centered_l4":
             values.append(jnp.sum(centered**4, axis=1))
+        elif name == "centered_l5":
+            values.append(jnp.sum(centered**5, axis=1))
+        elif name == "centered_l6":
+            values.append(jnp.sum(centered**6, axis=1))
+        elif name == "sqrt_centered_l2":
+            values.append(jnp.sqrt(jnp.sum(centered**2, axis=1) + 1e-8))
         else:
             raise ValueError(f"Unknown invariant basis term: {name}")
     return jnp.stack(values, axis=1)

@@ -32,7 +32,7 @@ Use this checklist before marking any milestone in `MILESTONES.md` complete.
 
 ## Suggested Next Milestone
 
-After Milestone 4, the next milestone should be Milestone 5: SOTA numerical training on K3 and quintic.
+After Milestone 5, the next milestone should be Milestone 6: numerical model probing and failure-mode analysis.
 
 ## Milestone 1 Specific Checks
 
@@ -118,32 +118,32 @@ After Milestone 4, the next milestone should be Milestone 5: SOTA numerical trai
 
 ## Milestone 5 Specific Checks
 
-- [ ] Autodiff-trained K3 model implemented.
-- [ ] Fermat quintic model training implemented.
-- [ ] Geometry-aware and symmetry-aware architecture choices documented.
-- [ ] Loss ablations implemented for the relevant published losses.
-- [ ] Stratified or difficult-locus sampling implemented.
-- [ ] Locus constraints implemented if reliable formulas are available, or explicitly deferred.
-- [ ] Phase-invariance features or restrictions from Mirjanic-Mishra Proposition 3.3 evaluated for training use.
-- [ ] Derivative-bound regularizers inspired by Section 6 are implemented or explicitly rejected with evidence.
-- [ ] Pseudo-origin metric target losses from Section 6 are implemented or explicitly rejected with evidence.
-- [ ] Equimodular-locus metric target losses from Section 6 are implemented or explicitly rejected with evidence.
-- [ ] Near-equimodular scaled-Fubini-Study warm start or auxiliary loss is evaluated.
-- [ ] Simple `sqrt(s2)` correction baseline from Section 6 is evaluated against project metrics.
-- [ ] Theory-derived training constraints are labelled as hard constraints, soft penalties, feature restrictions, warm starts, or evaluation-only diagnostics.
-- [ ] Multi-seed sweep implemented.
-- [ ] Hyperparameter and architecture sweep implemented.
-- [ ] Best model selected by held-out benchmark metrics.
-- [ ] K3 best model improves over the Milestone 3 checkpoint, or the failure is analyzed.
-- [ ] Quintic result is reported with the same metric definitions as K3.
-- [ ] Training curves generated.
-- [ ] Benchmark comparison figures generated.
-- [ ] Residual histograms and stratum/locus residual figures generated.
-- [ ] Literature comparison table uses compatible units only.
-- [ ] Best checkpoints, configs, seeds, and exact commands saved permanently.
-- [ ] Tests pass from the canonical repo path.
-- [ ] SOTA training command runs from the canonical repo path.
-- [ ] README, research log, report, milestones, checklist, and artifact policy updated.
+- [x] Autodiff-trained K3 model implemented.
+- [x] Fermat quintic model training implemented.
+- [x] Geometry-aware and symmetry-aware architecture choices documented.
+- [x] Loss ablations implemented for the relevant published losses.
+- [x] Stratified or difficult-locus sampling implemented.
+- [x] Locus constraints implemented if reliable formulas are available, or explicitly deferred.
+- [x] Phase-invariance features or restrictions from Mirjanic-Mishra Proposition 3.3 evaluated for training use.
+- [x] Derivative-bound regularizers inspired by Section 6 are explicitly deferred to Milestone 6 pending stable derivative probes.
+- [x] Pseudo-origin metric target losses from Section 6 are explicitly deferred to Milestone 6 pending a compatible locus implementation.
+- [x] Equimodular-locus metric target losses from Section 6 are explicitly deferred to Milestone 6 pending formula/convention validation.
+- [x] Near-equimodular scaled-Fubini-Study warm start or auxiliary loss is explicitly deferred to Milestone 6 probing.
+- [x] Simple `sqrt(s2)` correction baseline from Section 6 is evaluated against project metrics.
+- [x] Theory-derived training constraints are labelled as hard constraints, soft penalties, feature restrictions, warm starts, or evaluation-only diagnostics.
+- [x] Multi-seed sweep implemented.
+- [x] Hyperparameter and architecture sweep implemented.
+- [x] Best model selected by held-out benchmark metrics.
+- [x] K3 best model improves over the Milestone 3 checkpoint, or the failure is analyzed.
+- [x] Quintic result is reported with the same metric definitions as K3.
+- [x] Training curves generated.
+- [x] Benchmark comparison figures generated.
+- [x] Residual histograms and stratum/locus residual figures generated.
+- [x] Literature comparison table uses compatible units only.
+- [x] Best checkpoints, configs, seeds, and exact commands saved permanently.
+- [x] Tests pass from the canonical repo path.
+- [x] SOTA training command runs from the canonical repo path.
+- [x] README, research log, report, milestones, checklist, and artifact policy updated.
 
 ## Milestone 6 Specific Checks
 

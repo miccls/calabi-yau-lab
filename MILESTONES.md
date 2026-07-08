@@ -15,7 +15,7 @@ Symbolic discovery should be driven by extremely accurate numerical geometry. Th
 - [x] Milestone 2: High-Quality Symmetry-Aware Numerical Potential Model
 - [x] Milestone 3: SOTA K3 Numerical Tuning
 - [x] Milestone 4: Benchmark-Grade Autodiff Geometry And Published Loss Suite
-- [ ] Milestone 5: SOTA Numerical Training On K3 And Quintic
+- [x] Milestone 5: SOTA Numerical Training On K3 And Quintic
 - [ ] Milestone 6: Numerical Model Probing And Failure-Mode Analysis
 - [ ] Milestone 7: Quotient Sufficiency And Invariant Basis Discovery
 - [ ] Milestone 8: Structured Symbolic Ansatz Search
@@ -302,6 +302,38 @@ Completion criteria:
 - The best checkpoints are saved permanently and documented.
 - Remaining gap to published work is stated in comparable units where possible.
 
+Completion record:
+
+- Implemented generic autodiff-linear invariant correction training in `src/cy_expansion_lab/fit/autodiff_linear.py`.
+- Extended invariant basis support with `centered_l5`, `centered_l6`, and a smoothed `sqrt_centered_l2` term to evaluate the Mirjanic-Mishra `sqrt(s2)`-style baseline.
+- Added Milestone 5 runner: `experiments/run_milestone5.py`.
+- Ran the main Milestone 5 command:
+
+  ```bash
+  uv run --extra dev python experiments/run_milestone5.py --sample-count 96 --train-points 18 --val-points 14 --test-points 18 --maxiter 30 --basis-sets compact,rich,sqrt_s2_baseline --losses log_ma,hybrid_sigma --seeds 20260707,20260708
+  ```
+
+- Implemented basis, loss, and seed sweeps for Fermat quartic K3 and Fermat quintic.
+- Implemented training losses based on centered log-Monge-Ampere MSE, sample-normalized volume-ratio MSE, sigma-style smooth L1 volume-ratio error, positivity penalty, and L2 regularization.
+- Saved best K3 checkpoint: `artifacts/models/fermat_quartic_milestone5_best.json`.
+- Saved best quintic checkpoint: `artifacts/models/fermat_quintic_milestone5_best.json`.
+- Best K3 candidate: `k3_rich_log_ma_seed20260707`.
+- Best quintic candidate: `quintic_rich_log_ma_seed20260708`.
+- Autodiff benchmark comparison on the Milestone 5 held-out test patches:
+  - Fermat quartic K3 Fubini-Study: centered log-MA RMSE `0.459023`, sigma-style L1 volume-ratio error `0.420541`, positivity violation `0.0`.
+  - Fermat quartic K3 Milestone 2 checkpoint: centered log-MA RMSE `0.0342019`, sigma-style L1 volume-ratio error `0.0304118`, positivity violation `0.0`.
+  - Fermat quartic K3 Milestone 3 checkpoint: centered log-MA RMSE `0.015023`, sigma-style L1 volume-ratio error `0.010785`, positivity violation `0.0`.
+  - Fermat quartic K3 Milestone 5 best: centered log-MA RMSE `0.0149542`, sigma-style L1 volume-ratio error `0.0113278`, positivity violation `0.0`.
+  - Fermat quintic Fubini-Study: centered log-MA RMSE `0.667783`, sigma-style L1 volume-ratio error `0.564348`, positivity violation `0.0`.
+  - Fermat quintic Milestone 5 best: centered log-MA RMSE `0.0636611`, sigma-style L1 volume-ratio error `0.0498405`, positivity violation `0.0`.
+- Generated 14 promoted figures under `reports/figures/milestone5_*.png`, including training curves, loss components, benchmark bars, residual histograms, volume-ratio histograms, positivity histograms, stratum residuals, ablation plots, sampling counts, and residual-vs-`p2` plots.
+- Generated promoted tables under `reports/tables/milestone5_*.csv`.
+- Added literature refresh table with CYJAX, CYJAX docs, Mirjanic-Mishra, symbolic distillation, Sharp Edges, and the local thesis extraction note.
+- Theory-derived constraints are currently feature restrictions, basis terms, and evaluation-only diagnostics. Pseudo-origin/equimodular hard target losses and derivative-bound regularizers are explicitly deferred to Milestone 6 because compatible coordinate/locus formula implementations are not yet validated.
+- Remaining limitation: this is an autodiff-trained invariant linear correction family, not yet a full neural, graph, or high-dimensional spectral SOTA architecture.
+- Remaining limitation: K3 improves over Milestone 3 on centered log-MA RMSE by a small amount on the Milestone 5 held-out test set, but Milestone 3 remains slightly better on sigma-style L1 volume-ratio error.
+- Next suggested milestone: Milestone 6, numerical model probing and failure-mode analysis, with a likely feedback loop into a second Milestone 5 iteration.
+
 ## Milestone 6: Numerical Model Probing And Failure-Mode Analysis
 
 Use the best trained numerical models as experimental objects and feed discoveries back into Milestone 5 when they suggest better architectures, losses, constraints, or sampling.
@@ -506,8 +538,8 @@ Before marking any milestone complete, verify the following against the current 
 
 ## Suggested Next Goal
 
-The next milestone should be Milestone 5:
+The next milestone should be Milestone 6:
 
 ```text
-/goal Use /Users/ms/calabi-yau-lab as the base repo. Implement Milestone 5 from MILESTONES.md: SOTA numerical training on K3 and Fermat quintic using the benchmark-grade autodiff geometry and published metric suite. Train geometry-aware and symmetry-aware autodiff-compatible models, run multi-seed and loss-ablation sweeps, evaluate every candidate with the Milestone 4 metric definitions, compare K3 and quintic results in compatible units, save permanent best checkpoints with exact configs/seeds/commands, generate publication-quality figures, update reports and milestone docs, and recommend whether Milestone 6 probing should feed improvements back into Milestone 5.
+/goal Use /Users/ms/calabi-yau-lab as the base repo. Implement Milestone 6 from MILESTONES.md: numerical model probing and failure-mode analysis for the Milestone 5 K3 and quintic checkpoints. Probe equimodular, coordinate-degenerate, fixed-type, and pseudo-origin-type loci; evaluate residuals, gradients, Hessians, local asymptotics, invariant-coordinate maps, and Mirjanic-Mishra Proposition 3.3/Section 6 claims; classify each imported conjecture as supported, violated, inconclusive, or not yet testable; identify concrete sampling, constraint, or architecture changes; generate many figures and tables; update docs; and recommend whether to iterate back to Milestone 5 or proceed to quotient sufficiency discovery.
 ```

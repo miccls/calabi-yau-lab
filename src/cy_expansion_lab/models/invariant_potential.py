@@ -74,6 +74,12 @@ def invariant_basis(z: np.ndarray, basis_names: tuple[str, ...] = DEFAULT_BASIS_
             values.append(np.sum(centered**3, axis=1))
         elif name == "centered_l4":
             values.append(np.sum(centered**4, axis=1))
+        elif name == "centered_l5":
+            values.append(np.sum(centered**5, axis=1))
+        elif name == "centered_l6":
+            values.append(np.sum(centered**6, axis=1))
+        elif name == "sqrt_centered_l2":
+            values.append(np.sqrt(np.sum(centered**2, axis=1) + 1e-8))
         else:
             raise ValueError(f"Unknown invariant basis term: {name}")
     return np.stack(values, axis=1)
